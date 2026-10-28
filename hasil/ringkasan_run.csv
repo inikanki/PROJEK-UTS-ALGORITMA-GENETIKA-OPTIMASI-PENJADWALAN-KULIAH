@@ -1,0 +1,2 @@
+jumlah_run,run_berhasil_valid,fitness_terbaik_max,fitness_terbaik_rata2,fitness_terbaik_std,gen_valid_pertama_rata2,gen_valid_pertama_min,gen_valid_pertama_max,waktu_rata2_detik
+10,10,1.0,1.0,0.0,23.7,16,40,0.34230000000000005

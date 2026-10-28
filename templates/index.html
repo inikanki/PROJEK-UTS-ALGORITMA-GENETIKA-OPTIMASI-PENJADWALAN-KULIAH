@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Kuliahify — Penjadwal Kuliah Tanpa Bentrok</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='fonts.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='vendor/chart.umd.min.js') }}" defer></script>
+</head>
+<body>
+  {# Nilai form: pakai parameter yang baru dikirim jika ada, kalau tidak pakai default #}
+  {% set v = defaults %}
+  {% set seed_value = 1 %}
+
+  <a class="skip-link" href="#pengaturan">Lewati ke pengaturan</a>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="{{ url_for('index') }}" aria-label="Kuliahify, beranda">
+        <span class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 9.5h18M8.5 9.5v11M15 9.5v11" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="9.6" y="10.8" width="4.3" height="3.6" rx="1" fill="currentColor"/></svg>
+        </span>
+        <span>Kuliahify<small>Penjadwal kuliah</small></span>
+      </a>
+
+      <nav class="side-nav" aria-label="Navigasi utama">
+        <div class="nav-label">Workspace</div>
+        <a class="nav-item" href="#beranda" data-spy="beranda">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5h-5v5H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span>Beranda</span>
+        </a>
+        <a class="nav-item" href="#pengaturan" data-spy="pengaturan">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h9M18 7h1M5 17h1M10 17h9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="16" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+          <span>Data &amp; Parameter</span>
+        </a>
+        <a class="nav-item" href="#hasil" data-spy="hasil">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M4 10h16M10 10v9" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span>Hasil Penjadwalan</span>
+        </a>
+        <a class="nav-item" href="#analisis" data-spy="analisis">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18V6M4 18h16M7.5 14l3.5-4 3 2.5 4.5-5.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Grafik &amp; Analisis</span>
+        </a>
+        <a class="nav-item" href="#banding" data-spy="banding"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14M4 9h8M12 15h8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>Asli vs AG</span></a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="help-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        </div>
+        <strong>Jadwal rapi, kuliah happy!</strong>
+        <p>Optimalkan jadwal kuliah tanpa bentrok.</p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+    <header class="topbar">
+      <div class="crumb"><span>Kuliahify</span><i aria-hidden="true">/</i><b>Penjadwalan Kuliah</b></div>
+      <div class="badge-ag"><span class="dot" aria-hidden="true"></span>Algoritma Genetika &middot; Proyek UTS</div>
+    </header>
+
+    <section class="hero" id="beranda">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <div class="eyebrow">Penjadwalan otomatis</div>
+          <h1>Susun jadwal kuliah <mark>tanpa bentrok.</mark></h1>
+          <p>Unggah data mata kuliah, ruang, dan dosen. Algoritma genetika mencari susunan hari dan jam yang memenuhi semua kendala keras.</p>
+          <div class="hero-actions"><a class="btn btn-primary" href="#pengaturan">Atur dan jalankan</a><a class="btn btn-ghost" href="#banding">Lihat perbandingan</a></div>
+          <ol class="steps" aria-label="Alur kerja"><li><b>1</b>Pilih data</li><li><b>2</b>Atur parameter</li><li><b>3</b>Jalankan AG</li><li><b>4</b>Periksa hasil</li></ol>
+        </div>
+
+        <div class="mini-tt" aria-hidden="true">
+          <div class="mini-head">
+            <span></span><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span>
+          </div>
+          <div class="mini-body">
+            <div class="mini-time t1">07.30</div>
+            <div class="mini-time t2">09.30</div>
+            <div class="mini-time t3">13.00</div>
+            <div class="mini-time t4">15.00</div>
+            <div class="mini-block b-sen r1">Algoritma</div>
+            <div class="mini-block b-sel r2">Basis Data</div>
+            <div class="mini-block b-rab r1">Kalkulus</div>
+            <div class="mini-block b-kam r3">Pemrograman</div>
+            <div class="mini-block b-jum r2">Statistika</div>
+            <div class="mini-block b-sel2 mini-moves">Jaringan</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap"><div class="alert error" id="alert" role="alert" hidden></div></div>
+
+    <section class="section" id="pengaturan">
+      <div class="wrap">
+        <div class="section-head"><span class="sec-no">01</span><div><h2>Pengaturan optimasi</h2><p>Pilih data, atur parameter algoritma, lalu jalankan. Satu kali jalan memakai satu nilai seed.</p></div></div>
+
+        <form class="settings" id="optimasi-form" onsubmit="return false">
+          <div class="settings-side">
+            <h3>Data</h3>
+            <label class="dropzone" for="data_file" id="dropzone">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7 9m5-5 5 5M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <b>Pilih atau tarik file .xlsx</b>
+              <span class="dz-sub">Kosongkan untuk memakai data bawaan</span>
+              <input id="data_file" type="file" accept=".xlsx">
+              <span id="file-name" class="file-name" aria-live="polite">Memakai data bawaan</span>
+            </label>
+            <div class="info-data" id="info-data"></div>
+            <p class="note">File harus punya sheet <code>Data Jadwal</code>, <code>Slot Waktu</code>, <code>Ruang</code>, dan <code>Dosen</code>.</p>
+          </div>
+
+          <div class="settings-main">
+            <fieldset>
+              <legend>Populasi</legend>
+              <div class="fields">
+                <label class="field">
+                  <span class="field-label">Ukuran populasi</span>
+                  <input type="number" name="pop_size" min="20" max="300" value="{{ v.pop_size }}" required>
+                  <span class="field-hint">20 sampai 300 individu</span>
+                </label>
+                <label class="field">
+                  <span class="field-label">Jumlah generasi</span>
+                  <input type="number" name="generations" min="10" max="1000" value="{{ v.generations }}" required>
+                  <span class="field-hint">10 sampai 1000 generasi</span>
+                </label>
+                <label class="field">
+                  <span class="field-label">Elitisme</span>
+                  <input type="number" name="elitism" min="0" max="10" value="{{ v.elitism }}">
+                  <span class="field-hint">Individu terbaik yang dipertahankan</span>
+                </label>
+                <label class="field">
+                  <span class="field-label">Seed</span>
+                  <input type="number" name="seed" min="0" max="1000000" value="{{ seed_value }}">
+                  <span class="field-hint">Seed sama menghasilkan hasil sama</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Operator genetika</legend>
+              <div class="fields">
+                <label class="field">
+                  <span class="field-label">Metode seleksi</span>
+                  <select name="selection">
+                    <option value="tournament" {{ 'selected' if v.selection == 'tournament' }}>Turnamen</option>
+                    <option value="roulette" {{ 'selected' if v.selection == 'roulette' }}>Roulette wheel</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span class="field-label">Ukuran turnamen (k)</span>
+                  <input type="number" name="tournament_k" min="2" max="10" value="{{ v.tournament_k }}">
+                  <span class="field-hint">Dipakai pada seleksi turnamen</span>
+                </label>
+                <label class="field">
+                  <span class="field-label">Metode crossover</span>
+                  <select name="crossover">
+                    <option value="uniform" {{ 'selected' if v.crossover == 'uniform' }}>Uniform</option>
+                    <option value="one_point" {{ 'selected' if v.crossover == 'one_point' }}>Satu titik</option>
+                  </select>
+                </label>
+                <span class="field-pair">
+                  <label class="field">
+                    <span class="field-label">Crossover (pc)</span>
+                    <input type="number" name="pc" min="0" max="1" step="0.05" value="{{ v.pc }}" required>
+                    <span class="field-hint">0 sampai 1</span>
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Mutasi (pm)</span>
+                    <input type="number" name="pm" min="0" max="0.3" step="0.005" value="{{ v.pm }}" required>
+                    <span class="field-hint">0 sampai 0,3</span>
+                  </label>
+                </span>
+              </div>
+            </fieldset>
+
+            <label class="check">
+              <input type="checkbox" name="stop_on_valid" {{ 'checked' if v.stop_on_valid }}>
+              <span>
+                <b>Berhenti saat solusi valid pertama ditemukan</b>
+                <small>Proses lebih cepat, tetapi jadwal tidak dioptimalkan lebih lanjut.</small>
+              </span>
+            </label>
+
+            <div class="submit-row">
+              <button class="btn btn-primary btn-large" type="button" id="run-button">
+                <span class="btn-label">Jalankan optimasi</span>
+              </button>
+              <div class="progress" id="progress" hidden><progress id="bar" max="1" value="0"></progress><span id="ptext"></span></div>
+              <p class="submit-note" id="run-note">Lama proses bergantung pada ukuran data, populasi, dan jumlah generasi.</p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section section-result" id="hasil" hidden>
+      <div class="wrap">
+        <div class="section-head"><span class="sec-no">02</span><div><h2>Hasil penjadwalan</h2><p>Ringkasan solusi terbaik, jadwal lengkap, dan file untuk diunduh.</p></div></div>
+        <div class="verdict" id="verdict" role="status"></div>
+        <dl class="metrics" id="metrics"></dl>
+        <div class="sheet">
+          <div class="sheet-bar">
+            <div class="sheet-title"><h3>Jadwal terbaik</h3><p><span id="row-count">0</span> sesi <span id="gen-label"></span></p></div>
+            <div class="sheet-tools">
+              <select id="mode" aria-label="Tampilkan per"><option value="semua">Semua</option><option value="Semester">Per semester</option><option value="Kelas">Per kelas</option><option value="Dosen">Per dosen</option><option value="Ruang">Per ruang</option></select>
+              <select id="nilai" aria-label="Nilai filter" hidden></select>
+              <div class="seg" role="tablist" aria-label="Tampilan jadwal">
+                <button type="button" role="tab" class="is-active" data-view="grid" aria-selected="true">Grid</button>
+                <button type="button" role="tab" data-view="list" aria-selected="false">Daftar</button>
+              </div>
+              <div class="downloads"><a id="dl-csv" class="btn btn-quiet">CSV</a><a id="dl-xlsx" class="btn btn-quiet">Excel</a></div>
+            </div>
+          </div>
+          <label class="evo" id="evo" hidden>Evolusi generasi <input id="gen-slider" type="range" min="0" max="0" value="0"></label>
+          <div class="sem-legend" aria-label="Warna semester"><span><i class="sem1"></i>Semester 1</span><span><i class="sem3"></i>Semester 3</span><span><i class="sem5"></i>Semester 5</span></div>
+          <p class="note kelas-note">Kelas <b>-</b> = kuliah gabungan satu angkatan (tidak dibagi A/B). Pilih "Semua" untuk melihat seluruh jadwal. Klik blok untuk detail.</p>
+          <div class="view view-grid" id="view-grid" role="tabpanel"><div class="grid-scroll"><div class="tg" id="grid"></div></div></div>
+          <div class="detail" id="detail" hidden></div>
+          <div class="view view-list" id="view-list" role="tabpanel" hidden><div class="table-wrap"><table class="list-table">
+            <thead><tr><th>Hari</th><th>Slot waktu</th><th>Mata kuliah</th><th>Semester</th><th>Kelas</th><th>Ruang</th><th>Dosen</th></tr></thead><tbody id="list-body"></tbody></table></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="analisis">
+      <div class="wrap">
+        <div class="section-head"><span class="sec-no">03</span><div><h2>Konvergensi dan pelanggaran</h2><p>Fitness = 1 / (1 + jumlah pelanggaran kendala keras). Nilai 1 berarti tidak ada pelanggaran.</p></div></div>
+        <div class="analysis">
+          <figure class="chart-box">
+            <figcaption><h3>Fitness per generasi</h3><span class="legend"><i class="lg-best"></i>Terbaik <i class="lg-mean"></i>Rata-rata populasi</span></figcaption>
+            <div class="chart-area"><canvas id="convergenceChart" role="img" aria-label="Grafik garis fitness terbaik dan rata-rata per generasi"></canvas></div>
+          </figure>
+          <div class="violations"><h3>Rincian pelanggaran</h3><ul id="rincian"></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="banding">
+      <div class="wrap">
+        <div class="section-head"><span class="sec-no">04</span><div><h2>Jadwal asli vs hasil AG</h2><p>Jadwal dari Excel dibandingkan dengan jadwal hasil algoritma genetika.</p></div></div>
+        <div class="dua">
+          <article class="banding-card">
+            <h3 id="t-asli">Jadwal asli</h3>
+            <div class="sem-legend" aria-label="Warna semester"><span><i class="sem1"></i>Semester 1</span><span><i class="sem3"></i>Semester 3</span><span><i class="sem5"></i>Semester 5</span></div><p class="note banding-note">Blok bertanda <b class="tanda">!</b> dan berbingkai merah ikut melanggar kendala keras.</p>
+            <div class="grid-scroll"><div class="tg" id="g-asli"></div></div>
+            <h4 class="pl-judul">Rincian pelanggaran jadwal asli</h4>
+            <div class="pl" id="pl-asli"></div>
+          </article>
+          <article class="banding-card">
+            <h3 id="t-ag">Hasil AG</h3>
+            <div class="grid-scroll"><div class="tg" id="g-ag"><p class="note">Belum dijalankan.</p></div></div>
+            <h4 class="pl-judul">Rincian pelanggaran hasil AG</h4>
+            <div class="pl" id="pl-ag"><p class="note">Belum dijalankan.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <footer class="footer"><b>Kuliahify</b> &middot; Penjadwal kuliah dengan algoritma genetika</footer>
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</body>
+</html>

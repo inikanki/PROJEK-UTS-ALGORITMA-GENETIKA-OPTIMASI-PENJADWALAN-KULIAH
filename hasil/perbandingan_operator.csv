@@ -1,0 +1,5 @@
+seleksi,crossover,jumlah_run,run_berhasil_valid,fitness_terbaik_max,fitness_terbaik_rata2,fitness_terbaik_std,gen_valid_pertama_rata2,gen_valid_pertama_min,gen_valid_pertama_max,waktu_rata2_detik
+tournament,uniform,10.0,10.0,1.0,1.0,0.0,23.7,16.0,40.0,0.3385
+tournament,one_point,10.0,10.0,1.0,1.0,0.0,28.1,15.0,44.0,0.332
+roulette,uniform,10.0,10.0,1.0,1.0,0.0,47.6,30.0,100.0,0.4862
+roulette,one_point,10.0,10.0,1.0,1.0,0.0,60.4,33.0,147.0,1.1998
