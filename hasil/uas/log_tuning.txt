@@ -1,0 +1,73 @@
+Data: 60 sesi, 20 dosen, 10 ruang, 21 slot | keluaran: /home/claude/repo/hasil/uas
+Tuning: 54 konfigurasi x 5 run (sudah selesai: 0)
+[1/54] pop=50 pc=0.6 pm=0.01 tournament -> penalti 0.20 valid 100.0% gen_konv 48.6 (10s)
+[2/54] pop=50 pc=0.6 pm=0.01 roulette   -> penalti 0.20 valid 100.0% gen_konv 105.0 (9s)
+[3/54] pop=50 pc=0.6 pm=0.05 tournament -> penalti 2.40 valid 100.0% gen_konv 145.2 (10s)
+[4/54] pop=50 pc=0.6 pm=0.05 roulette   -> penalti 0.00 valid 100.0% gen_konv 169.4 (10s)
+Data: 60 sesi, 20 dosen, 10 ruang, 21 slot | keluaran: /home/claude/repo/hasil/uas
+Tuning: 54 konfigurasi x 5 run (sudah selesai: 4)
+[5/54] pop=50 pc=0.6 pm=0.1 tournament -> penalti 4.60 valid 100.0% gen_konv 155.0 (11s)
+[6/54] pop=50 pc=0.6 pm=0.1 roulette   -> penalti 0.40 valid 100.0% gen_konv 190.8 (12s)
+[7/54] pop=50 pc=0.8 pm=0.01 tournament -> penalti 0.20 valid 100.0% gen_konv 81.2 (10s)
+[8/54] pop=50 pc=0.8 pm=0.01 roulette   -> penalti 0.20 valid 100.0% gen_konv 99.6 (9s)
+[9/54] pop=50 pc=0.8 pm=0.05 tournament -> penalti 1.80 valid 100.0% gen_konv 108.0 (10s)
+[10/54] pop=50 pc=0.8 pm=0.05 roulette   -> penalti 0.00 valid 100.0% gen_konv 150.8 (10s)
+[11/54] pop=50 pc=0.8 pm=0.1 tournament -> penalti 4.00 valid 100.0% gen_konv 203.8 (11s)
+[12/54] pop=50 pc=0.8 pm=0.1 roulette   -> penalti 0.20 valid 100.0% gen_konv 129.2 (10s)
+[13/54] pop=50 pc=0.9 pm=0.01 tournament -> penalti 0.60 valid 100.0% gen_konv 51.4 (10s)
+[14/54] pop=50 pc=0.9 pm=0.01 roulette   -> penalti 0.20 valid 100.0% gen_konv 82.6 (9s)
+[15/54] pop=50 pc=0.9 pm=0.05 tournament -> penalti 4.40 valid 100.0% gen_konv 121.2 (10s)
+[16/54] pop=50 pc=0.9 pm=0.05 roulette   -> penalti 0.00 valid 100.0% gen_konv 150.0 (10s)
+[17/54] pop=50 pc=0.9 pm=0.1 tournament -> penalti 5.80 valid 100.0% gen_konv 156.4 (10s)
+[18/54] pop=50 pc=0.9 pm=0.1 roulette   -> penalti 0.20 valid 100.0% gen_konv 192.4 (11s)
+[19/54] pop=100 pc=0.6 pm=0.01 tournament -> penalti 0.00 valid 100.0% gen_konv 78.2 (18s)
+[20/54] pop=100 pc=0.6 pm=0.01 roulette   -> penalti 0.40 valid 100.0% gen_konv 60.6 (17s)
+[21/54] pop=100 pc=0.6 pm=0.05 tournament -> penalti 2.00 valid 100.0% gen_konv 175.2 (19s)
+[22/54] pop=100 pc=0.6 pm=0.05 roulette   -> penalti 0.20 valid 100.0% gen_konv 61.6 (19s)
+[23/54] pop=100 pc=0.6 pm=0.1 tournament -> penalti 4.80 valid 100.0% gen_konv 210.4 (19s)
+[24/54] pop=100 pc=0.6 pm=0.1 roulette   -> penalti 0.00 valid 100.0% gen_konv 147.8 (19s)
+[25/54] pop=100 pc=0.8 pm=0.01 tournament -> penalti 0.00 valid 100.0% gen_konv 43.0 (18s)
+[26/54] pop=100 pc=0.8 pm=0.01 roulette   -> penalti 0.00 valid 100.0% gen_konv 62.2 (17s)
+[27/54] pop=100 pc=0.8 pm=0.05 tournament -> penalti 2.80 valid 100.0% gen_konv 163.6 (20s)
+[28/54] pop=100 pc=0.8 pm=0.05 roulette   -> penalti 0.20 valid 100.0% gen_konv 87.4 (19s)
+[29/54] pop=100 pc=0.8 pm=0.1 tournament -> penalti 6.60 valid 100.0% gen_konv 234.2 (20s)
+[30/54] pop=100 pc=0.8 pm=0.1 roulette   -> penalti 0.00 valid 100.0% gen_konv 133.0 (20s)
+[31/54] pop=100 pc=0.9 pm=0.01 tournament -> penalti 0.00 valid 100.0% gen_konv 51.2 (18s)
+[32/54] pop=100 pc=0.9 pm=0.01 roulette   -> penalti 0.00 valid 100.0% gen_konv 56.2 (18s)
+[33/54] pop=100 pc=0.9 pm=0.05 tournament -> penalti 5.40 valid 100.0% gen_konv 166.4 (19s)
+[34/54] pop=100 pc=0.9 pm=0.05 roulette   -> penalti 0.00 valid 100.0% gen_konv 99.2 (20s)
+[35/54] pop=100 pc=0.9 pm=0.1 tournament -> penalti 9.40 valid 100.0% gen_konv 182.4 (19s)
+[36/54] pop=100 pc=0.9 pm=0.1 roulette   -> penalti 0.20 valid 100.0% gen_konv 149.8 (19s)
+[37/54] pop=200 pc=0.6 pm=0.01 tournament -> penalti 0.00 valid 100.0% gen_konv 38.6 (36s)
+[38/54] pop=200 pc=0.6 pm=0.01 roulette   -> penalti 0.00 valid 100.0% gen_konv 46.6 (35s)
+[39/54] pop=200 pc=0.6 pm=0.05 tournament -> penalti 2.20 valid 100.0% gen_konv 204.6 (37s)
+[40/54] pop=200 pc=0.6 pm=0.05 roulette   -> penalti 0.00 valid 100.0% gen_konv 52.0 (37s)
+[41/54] pop=200 pc=0.6 pm=0.1 tournament -> penalti 4.80 valid 100.0% gen_konv 164.8 (38s)
+[42/54] pop=200 pc=0.6 pm=0.1 roulette   -> penalti 0.20 valid 100.0% gen_konv 110.6 (39s)
+[43/54] pop=200 pc=0.8 pm=0.01 tournament -> penalti 0.00 valid 100.0% gen_konv 48.4 (39s)
+[44/54] pop=200 pc=0.8 pm=0.01 roulette   -> penalti 0.00 valid 100.0% gen_konv 58.4 (36s)
+[45/54] pop=200 pc=0.8 pm=0.05 tournament -> penalti 4.20 valid 100.0% gen_konv 176.2 (40s)
+[46/54] pop=200 pc=0.8 pm=0.05 roulette   -> penalti 0.00 valid 100.0% gen_konv 58.6 (38s)
+[47/54] pop=200 pc=0.8 pm=0.1 tournament -> penalti 7.40 valid 100.0% gen_konv 232.2 (38s)
+[48/54] pop=200 pc=0.8 pm=0.1 roulette   -> penalti 0.00 valid 100.0% gen_konv 81.4 (38s)
+[49/54] pop=200 pc=0.9 pm=0.01 tournament -> penalti 0.20 valid 100.0% gen_konv 51.2 (36s)
+[50/54] pop=200 pc=0.9 pm=0.01 roulette   -> penalti 0.00 valid 100.0% gen_konv 55.6 (35s)
+[51/54] pop=200 pc=0.9 pm=0.05 tournament -> penalti 6.40 valid 100.0% gen_konv 189.0 (40s)
+[52/54] pop=200 pc=0.9 pm=0.05 roulette   -> penalti 0.00 valid 100.0% gen_konv 78.8 (39s)
+[53/54] pop=200 pc=0.9 pm=0.1 tournament -> penalti 10.20 valid 100.0% gen_konv 214.2 (39s)
+[54/54] pop=200 pc=0.9 pm=0.1 roulette   -> penalti 0.00 valid 100.0% gen_konv 77.2 (44s)
+
+10 konfigurasi teratas:
+  pop_size  pc   pm  selection  runs  valid_pct  penalti_mean  penalti_std  keras_mean  gen_valid_mean  gen_konvergen_mean  waktu_mean
+      200 0.6 0.01 tournament     5      100.0           0.0          0.0         0.0             6.0                38.6        7.12
+      100 0.8 0.01 tournament     5      100.0           0.0          0.0         0.0             6.4                43.0        3.53
+      200 0.6 0.01   roulette     5      100.0           0.0          0.0         0.0             5.4                46.6        7.01
+      200 0.8 0.01 tournament     5      100.0           0.0          0.0         0.0             6.8                48.4        7.79
+      100 0.9 0.01 tournament     5      100.0           0.0          0.0         0.0             8.8                51.2        3.55
+      200 0.6 0.05   roulette     5      100.0           0.0          0.0         0.0             6.8                52.0        7.30
+      200 0.9 0.01   roulette     5      100.0           0.0          0.0         0.0             8.4                55.6        7.00
+      100 0.9 0.01   roulette     5      100.0           0.0          0.0         0.0            12.2                56.2        3.55
+      200 0.8 0.01   roulette     5      100.0           0.0          0.0         0.0             7.6                58.4        7.14
+      200 0.8 0.05   roulette     5      100.0           0.0          0.0         0.0             9.0                58.6        7.57
+
+Konfigurasi terbaik: {'pop_size': 200, 'pc': 0.6, 'pm': 0.01, 'selection': 'tournament'}
