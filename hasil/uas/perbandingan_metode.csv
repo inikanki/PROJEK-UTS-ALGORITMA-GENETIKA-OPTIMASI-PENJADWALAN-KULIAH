@@ -1,0 +1,6 @@
+metode,run,valid_%,penalti_mean,penalti_std,keras_mean,jeda_mean,beban_mean,sore_mean,waktu_mean_dtk,waktu_std_dtk,evaluasi_mean
+AG UAS (konfigurasi terbaik),30,100.0,0.067,0.254,0.0,0.03,0.0,0.03,18.392,0.314,60200
+AG UTS,30,100.0,18.4,3.587,0.0,9.2,0.4,8.4,3.416,0.232,30100
+Hill Climbing,30,100.0,0.0,0.0,0.0,0.0,0.0,0.0,4.995,0.321,60115
+Simulated Annealing,30,100.0,0.0,0.0,0.0,0.0,0.0,0.0,72.428,0.677,60200
+Greedy,30,100.0,18.833,4.662,0.0,9.07,0.37,9.03,0.01,0.001,60

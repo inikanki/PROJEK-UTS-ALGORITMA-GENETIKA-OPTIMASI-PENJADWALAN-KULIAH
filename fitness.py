@@ -1,7 +1,14 @@
-"""Fungsi fitness berbasis penalti kendala keras + validator independen + kendala lunak."""
+"""Fungsi fitness berbasis penalti: kendala keras (bobot besar) + kendala lunak (bobot kecil) + validator independen.
+
+UAS: penalti = w_hard*keras + w_jeda*jeda_panjang + w_beban*beban_dosen + w_sore*sesi_sore ; fitness = 1/(1+penalti).
+Dengan BOBOT_UTS (w_hard=1, lunak=0) rumusnya identik dengan fitness UTS: 1/(1+pelanggaran).
+"""
 import numpy as np
 
+import config
+
 NAMA_KENDALA = ["dosen", "kelas", "ruang", "kapasitas", "durasi"]
+NAMA_LUNAK = ["jeda_panjang", "beban_dosen", "sesi_sore"]
 
 
 class Evaluator:
@@ -11,11 +18,31 @@ class Evaluator:
     fitness = 1 / (1 + total_pelanggaran)   -> 1.0 berarti jadwal valid.
     """
 
-    def __init__(self, p):
+    def __init__(self, p, bobot=None, batas=None):
         self.p = p
         self.I, self.J = np.triu_indices(p.n_sesi, 1)
         self.m_dosen = p.same_dosen[self.I, self.J]
         self.m_kelas = p.class_conflict[self.I, self.J]
+        # ---- bobot & parameter kendala lunak ----
+        b = {**config.BOBOT_DEFAULT, **(bobot or {})}
+        self.w_hard, self.w_jeda = float(b["w_hard"]), float(b["w_jeda"])
+        self.w_beban, self.w_sore = float(b["w_beban"]), float(b["w_sore"])
+        bt = {**config.SOFT_BATAS, **(batas or {})}
+        self.batas_jeda, self.maks_hari, self.sore = bt["batas_jeda"], bt["maks_sesi_hari"], bt["sore_selesai"]
+        # ---- prakomputasi lunak ----
+        urut = {h: k for k, h in enumerate(config.HARI_URUT)}
+        self.hari_slot = np.array([urut[h] for h in p.slot_hari])
+        self.mulai, self.selesai = np.asarray(p.slot_mulai), np.asarray(p.slot_selesai)
+        self.sore_slot = (self.selesai > self.sore).astype(np.int64)
+        sem, kls = np.array(p.semester), np.array(p.kelas)
+        self.grup_jeda = []                          # tiap (semester, kelas A/B): indeks sesi non-agama
+        for s in sorted(set(p.semester)):
+            for k in ("A", "B"):
+                idx = np.where((sem == s) & ((kls == k) | (kls == "-")) & ~np.asarray(p.is_agama))[0]
+                if len(idx) >= 2:
+                    self.grup_jeda.append(idx)
+        self.M_dosen = np.zeros((p.n_sesi, p.n_dosen))
+        self.M_dosen[np.arange(p.n_sesi), p.dosen_id] = 1.0
 
     def rincian(self, slots, rooms):
         """Return array (N, 5): pelanggaran per jenis kendala keras."""
@@ -32,7 +59,37 @@ class Evaluator:
         return np.stack([v_dosen, v_kelas, v_ruang, v_kap, v_dur], axis=1)
 
     def total(self, slots, rooms):
+        """Jumlah pelanggaran KERAS per individu (N,)."""
         return self.rincian(slots, rooms).sum(1)
+
+    def lunak(self, slots):
+        """Return (N, 3): [jeda_panjang, beban_dosen, sesi_sore] untuk tiap individu (tervektorisasi)."""
+        slots = np.atleast_2d(slots)
+        N = len(slots)
+        # (1) jeda panjang: urutkan sesi tiap kelas per (hari, mulai, selesai); hitung jeda berurutan > batas
+        jeda = np.zeros(N)
+        for g in self.grup_jeda:
+            sl = slots[:, g]
+            h, a, b = self.hari_slot[sl], self.mulai[sl], self.selesai[sl]
+            o = np.argsort(h * 10_000_000 + a * 2000 + b, axis=1, kind="stable")
+            h, a, b = (np.take_along_axis(x, o, axis=1) for x in (h, a, b))
+            jeda += ((h[:, 1:] == h[:, :-1]) & (a[:, 1:] - b[:, :-1] > self.batas_jeda)).sum(1)
+        # (2) beban dosen: kelebihan sesi per hari di atas maks_sesi_hari
+        hs = self.hari_slot[slots]
+        beban = np.zeros(N)
+        for d in range(len(config.HARI_URUT)):
+            cnt = (hs == d).astype(float) @ self.M_dosen                    # (N, n_dosen)
+            beban += np.maximum(0, cnt - self.maks_hari).sum(1)
+        # (3) sesi sore
+        sore = self.sore_slot[slots].sum(1)
+        return np.stack([jeda, beban, sore], axis=1)
+
+    def evaluasi(self, slots, rooms):
+        """Return (keras, lunak_berbobot, penalti) masing-masing (N,). penalti = w_hard*keras + lunak_berbobot."""
+        keras = self.total(slots, rooms)
+        L = self.lunak(slots)
+        lunak_w = L @ np.array([self.w_jeda, self.w_beban, self.w_sore])
+        return keras, lunak_w, self.w_hard * keras + lunak_w
 
     @staticmethod
     def fitness_dari_pelanggaran(v):
@@ -60,7 +117,7 @@ def validasi_independen(p, slots, rooms):
 
 
 def jeda_panjang(p, slots, batas_menit=90):
-    """KENDALA LUNAK (hanya dilaporkan, belum dioptimalkan di UTS):
+    """KENDALA LUNAK #1 (UAS: ikut dioptimalkan lewat Evaluator.lunak):
     jumlah jeda > batas_menit di antara dua kuliah pada hari yang sama untuk tiap kelas.
     Mata kuliah agama dilewati (mahasiswa hanya mengambil satu)."""
     total = 0
@@ -78,3 +135,18 @@ def jeda_panjang(p, slots, batas_menit=90):
                     if a2 - b1 > batas_menit:
                         total += 1
     return total
+
+
+def lunak_independen(p, slots, batas=None):
+    """Versi loop biasa dari kendala lunak (untuk unit test). Return dict {jeda_panjang, beban_dosen, sesi_sore}."""
+    bt = {**config.SOFT_BATAS, **(batas or {})}
+    jeda = jeda_panjang(p, slots, bt["batas_jeda"])
+    beban = 0
+    for d in range(p.n_dosen):
+        per_hari = {}
+        for i in range(p.n_sesi):
+            if p.dosen_id[i] == d:
+                per_hari[p.slot_hari[slots[i]]] = per_hari.get(p.slot_hari[slots[i]], 0) + 1
+        beban += sum(max(0, c - bt["maks_sesi_hari"]) for c in per_hari.values())
+    sore = sum(1 for i in range(p.n_sesi) if p.slot_selesai[slots[i]] > bt["sore_selesai"])
+    return {"jeda_panjang": int(jeda), "beban_dosen": int(beban), "sesi_sore": int(sore)}

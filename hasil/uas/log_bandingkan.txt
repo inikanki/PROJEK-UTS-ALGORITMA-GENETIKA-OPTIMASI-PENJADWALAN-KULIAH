@@ -1,0 +1,32 @@
+Data: 60 sesi, 20 dosen, 10 ruang, 21 slot | keluaran: /home/claude/repo/hasil/uas
+Anggaran evaluasi HC/SA = 60200 (= AG terbaik)
+  Hill Climbing selesai
+  Simulated Annealing selesai
+  Greedy selesai
+
+                       metode  run  valid_%  penalti_mean  penalti_std  keras_mean  jeda_mean  beban_mean  sore_mean  waktu_mean_dtk  waktu_std_dtk  evaluasi_mean
+AG UAS (konfigurasi terbaik)   30    100.0         0.067        0.254         0.0       0.03        0.00       0.03           7.391          0.424          60200
+                      AG UTS   30    100.0        18.400        3.587         0.0       9.20        0.40       8.40           1.026          0.068          30100
+               Hill Climbing   30    100.0         0.000        0.000         0.0       0.00        0.00       0.00           1.520          0.081          60115
+         Simulated Annealing   30    100.0         0.000        0.000         0.0       0.00        0.00       0.00          23.287          0.868          60200
+                      Greedy   30    100.0        18.833        4.662         0.0       9.07        0.37       9.03           0.003          0.000             60 
+
+          pembanding  mean_AG_UAS  mean_pembanding  p_mann_whitney    p_welch_t
+             AG UTS        0.067           18.400    2.288041e-12 1.164310e-22
+      Hill Climbing        0.067            0.000    1.607420e-01 1.607882e-01
+Simulated Annealing        0.067            0.000    1.607420e-01 1.607882e-01
+             Greedy        0.067           18.833    2.235276e-12 1.009326e-19
+Traceback (most recent call last):
+  File "/home/claude/repo/eksperimen_uas.py", line 247, in <module>
+    main()
+  File "/home/claude/repo/eksperimen_uas.py", line 243, in main
+    bandingkan(p, ev, a.runs or 30, out, dasar)
+  File "/home/claude/repo/eksperimen_uas.py", line 212, in bandingkan
+    ax[0].boxplot([df[df["metode"] == n]["penalti"] for n in nama], labels=[n.replace(" (", "\n(") for n in nama])
+  File "/usr/local/lib/python3.12/dist-packages/matplotlib/_api/deprecation.py", line 477, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/matplotlib/__init__.py", line 1531, in inner
+    return func(
+           ^^^^^
+TypeError: Axes.boxplot() got an unexpected keyword argument 'labels'
